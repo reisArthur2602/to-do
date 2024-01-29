@@ -4,7 +4,7 @@ import Input from "../../components/Input";
 import { AiOutlineMail } from "react-icons/ai";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { ButtonSubmit } from "../../components/ButtonSubmit";
-import { Hero } from "./styles";
+import { Hero } from "../../components/Hero";
 
 const Register = () => {
   return (
