@@ -1,8 +1,12 @@
-import React from "react";
-import { Wrapper } from "./styles";
+import styled from "styled-components";
 
-const Container = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
-};
+const Container = styled.div`
+  max-width: 80.3125rem;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1rem;
+`;
 
-export default Container;
+export { Container };

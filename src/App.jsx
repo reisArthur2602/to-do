@@ -1,19 +1,18 @@
-import React from 'react'
-import AppRoutes from './routes/AppRoutes'
-import Container from './components/Container'
-import Header from './components/Header'
+import React from "react";
+import AppRoutes from "./routes/AppRoutes";
+
+import Header from "./components/Header";
+import { Container } from "./components/Container";
 
 const App = () => {
   return (
     <>
-     <Container>
-      <Header/>
-      <AppRoutes/>
-     </Container>
-     
+      <Container>
+        <Header />
+        <AppRoutes />
+      </Container>
     </>
-   
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -7,19 +7,18 @@ export const GlobalStyled = createGlobalStyle`
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
+  font-family: inherit;
 }
 
 
 body{
   font-family: "poppins" ,sans-serif;
-  min-width: 100vh;
+  min-height: 100vh;
   color: #FFFFFF;
   background-color:#050214 ;
 }
 
-a{
-  cursor: pointer;
-}
+
 
 
 `;
