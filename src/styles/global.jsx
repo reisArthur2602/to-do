@@ -9,9 +9,6 @@ export const GlobalStyled = createGlobalStyle`
   text-decoration: none;
 }
 
-img{
-  width: 100%;
-}
 
 body{
   font-family: "poppins" ,sans-serif;
@@ -19,4 +16,10 @@ body{
   color: #FFFFFF;
   background-color:#050214 ;
 }
+
+a{
+  cursor: pointer;
+}
+
+
 `;
