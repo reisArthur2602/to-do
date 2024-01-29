@@ -6,7 +6,7 @@ const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding-inline: 1rem;
+  padding-inline: 2rem;
 `;
 
 export { Container };

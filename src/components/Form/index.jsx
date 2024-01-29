@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 const Form = styled.form`
   max-width: 27.5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.875rem;
+  gap: 2rem;
 
   h2 {
     font-size: 1.875rem;
