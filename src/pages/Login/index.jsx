@@ -6,12 +6,20 @@ import { AiOutlineMail } from "react-icons/ai";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../services/firebaseConnection";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email && !password) return;
+    await signInWithEmailAndPassword(email, password);
+  };
 
   return (
     <Hero>
@@ -39,7 +47,7 @@ const Login = () => {
           onchange={(e) => setPassword(e.target.value)}
         />
 
-        <ButtonSubmit>Login</ButtonSubmit>
+        <ButtonSubmit onClick={(e) => handleLogin(e)}>Login</ButtonSubmit>
       </Form>
     </Hero>
   );
