@@ -1,15 +1,15 @@
 import React from "react";
-import { InputCustomer } from "./styles";
+import { InputContainer, InputCustomer } from "./styles";
 
 const Input = ({ title, type, placeholder, icon }) => {
   return (
-    <InputCustomer>
+    <InputContainer>
       <label>{title}</label>
       <div>
         {icon}
-        <input type={type} placeholder={placeholder} />
+        <InputCustomer type={type} placeholder={placeholder} />
       </div>
-    </InputCustomer>
+    </InputContainer>
   );
 };
 

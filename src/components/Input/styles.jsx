@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InputCustomer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.6875rem;
@@ -21,18 +21,16 @@ const InputCustomer = styled.div`
     align-items: center;
   }
 
-  input {
-    border: 0;
+`;
+
+const InputCustomer = styled.input`
+ border: 0;
     background: transparent;
     color: #fff;
     font-size: 1rem;
     font-weight: 400;
     line-height: normal;
     flex: 1;
-  }
+`
 
-
- 
-`;
-
-export { InputCustomer };
+export { InputContainer , InputCustomer};
