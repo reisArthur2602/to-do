@@ -6,10 +6,21 @@ import { AiOutlineMail } from "react-icons/ai";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { ButtonSubmit } from "../../components/ButtonSubmit";
 import { useState } from "react";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../services/firebaseConnection";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (!email & !password) return;
+    await createUserWithEmailAndPassword(email, password);
+  };
 
   return (
     <Hero>
@@ -36,7 +47,9 @@ const Register = () => {
           onchange={(e) => setPassword(e.target.value)}
         />
 
-        <ButtonSubmit>Cadastrar</ButtonSubmit>
+        <ButtonSubmit onClick={(e) => handleRegister(e)}>
+          Cadastrar
+        </ButtonSubmit>
       </Form>
     </Hero>
   );

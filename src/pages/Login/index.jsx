@@ -7,9 +7,11 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
 
   return (
     <Hero>
@@ -26,7 +28,7 @@ const Login = () => {
           placeholder="Insira o seu endereço de email"
           icon={<AiOutlineMail size={18} color="#Fff" />}
           value={email}
-          onchange={(e)=>setEmail(e.target.value)}
+          onchange={(e) => setEmail(e.target.value)}
         />
         <Input
           title="Senha"
@@ -34,7 +36,7 @@ const Login = () => {
           placeholder="Insira o sua senha"
           icon={<IoLockClosedOutline size={18} color="#Fff" />}
           value={password}
-          onchange={(e)=>setPassword(e.target.value)}
+          onchange={(e) => setPassword(e.target.value)}
         />
 
         <ButtonSubmit>Login</ButtonSubmit>
