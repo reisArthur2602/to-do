@@ -1,27 +1,36 @@
 import { Form } from "../../components/Form";
 import { Hero } from "../../components/Hero";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ButtonSubmit } from "../../components/ButtonSubmit";
 import Input from "../../components/Input";
+
 import { AiOutlineMail } from "react-icons/ai";
 import { IoLockClosedOutline } from "react-icons/io5";
-import { ButtonSubmit } from "../../components/ButtonSubmit";
+
 import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConnection";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    
+
+    if (email !== "" && password !== "") {
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          navigate("/admin", { replace: true });
+        })
+        .catch((err) => console.log("Erro ao fazer cadastro" + err));
+    }
   };
 
   return (
     <Hero>
-      <Form>
+      <Form onSubmit={handleRegister}>
         <h2>Cadastrar-se👋</h2>
         <p>
           Já possui uma conta? Você pode fazer <Link to="/">Login aqui !</Link>
@@ -44,9 +53,7 @@ const Register = () => {
           onchange={(e) => setPassword(e.target.value)}
         />
 
-        <ButtonSubmit onClick={(e) => handleRegister(e)}>
-          Cadastrar
-        </ButtonSubmit>
+        <ButtonSubmit type="submit">Cadastrar</ButtonSubmit>
       </Form>
     </Hero>
   );
