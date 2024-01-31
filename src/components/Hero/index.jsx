@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Hero = styled.section`
+const Hero = styled.main`
   margin-top: 9rem;
   display: flex;
   align-items: center;
