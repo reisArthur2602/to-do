@@ -26,9 +26,14 @@ const Container = styled.section`
 const FormTask = styled.form`
   display: flex;
   gap: 0.5rem;
+  @media screen and (max-width: 26.25rem) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 const InputTask = styled.input`
-  flex: 1;
+  max-width: 46.6875rem;
+  width: 100%;
   background-color: #3b3486;
   color: #ffe9b1;
   padding: 1rem;
@@ -41,9 +46,11 @@ const InputTask = styled.input`
   }
 `;
 const ButtonTask = styled.button`
+  min-width: 90px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  justify-content: center;
 
   background-color: #864af9;
   padding: 1rem;
