@@ -15,8 +15,6 @@ import {
 import { db } from "../../services/firebaseConnection";
 import styled from "styled-components";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { FaRegCircle } from "react-icons/fa6";
 
 const Container = styled.section`
   max-width: 52.8125rem;
@@ -80,6 +78,8 @@ const Admin = () => {
   const [taskInput, setTaskInput] = useState("");
   const [UserLS, setUserLS] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
+
   useEffect(() => {
     const loadTask = async () => {
       const data = JSON.parse(localStorage.getItem("@dataUser"));
@@ -101,6 +101,7 @@ const Admin = () => {
               id: doc.id,
               tarefa: doc.data().tarefa,
               userUid: doc.data().userUid,
+              completa: doc.data().completa,
               created: doc.data().created,
             });
           });
@@ -109,8 +110,14 @@ const Admin = () => {
         });
       }
     };
+
     loadTask();
   }, []);
+
+  useEffect(() => {
+    const filter = tasks.filter((task) => task.completa === true);
+    setCompletedTasks(filter);
+  }, [tasks]);
 
   const createTask = async (e) => {
     e.preventDefault();
@@ -119,6 +126,7 @@ const Admin = () => {
         tarefa: taskInput,
         created: new Date(),
         userUid: UserLS?.uid,
+        completa: false,
       })
         .then(() => console.log("Tarefa cadastrada com sucesso"))
         .catch((err) => console.log("Erro ao cadastrar tarefa" + err));
@@ -144,15 +152,16 @@ const Admin = () => {
         <FlexContainer>
           <WrapperCount>
             <CountTask text="Tarefas Criadas" count={tasks.length} />
-            <CountTask text="Concluídas" />
+            <CountTask text="Concluídas" count={completedTasks.length} />
           </WrapperCount>
 
           <TasklistContainer>
             {tasks.length > 0 ? (
               tasks.map((task) => (
                 <Tasklist
-                  icon={<FaRegCircle size={24} color="#864AF9" />}
                   text={task.tarefa}
+                  id={task.id}
+                  isCompleted={task.completa}
                   key={task.id}
                 />
               ))

@@ -1,7 +1,10 @@
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../services/firebaseConnection";
+import { useState } from "react";
+
 import styled from "styled-components";
 import { FaRegCheckCircle } from "react-icons/fa";
-import { FaRegTrashCan, FaRegCircle  } from "react-icons/fa6";
-
+import { FaRegTrashCan, FaRegCircle } from "react-icons/fa6";
 
 const TasklistContainer = styled.div`
   background-color: #3b3486;
@@ -13,26 +16,52 @@ const TasklistContainer = styled.div`
   gap: 0.75rem;
   border-radius: 0.5rem;
 
-  p {
-    font-size: 0.875rem;
-    font-weight: 400;
-    max-width: 46.25rem;
-    width: 100%;
-  }
-
-  svg {
+  button {
+    display: flex;
+    border: 0;
+    background-color: transparent;
     cursor: pointer;
   }
 `;
 
-const Tasklist = ({icon,text}) => {
+const TextTask = styled.p`
+  font-size: 0.875rem;
+  font-weight: 400;
+  max-width: 46.25rem;
+  width: 100%;
+  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+  color: ${(props) => (props.completed ? "#FFE9B1" : "#fff")};
+ 
+`;
+
+const Tasklist = ({ text, id, isCompleted }) => {
+  let complete = isCompleted;
+
+  const handleDelete = async (id) => {
+    const TaskRef = doc(db, "tarefas", id);
+    await deleteDoc(TaskRef);
+  };
+
+  const handleComplete = async (id) => {
+    const TaskRef = doc(db, "tarefas", id);
+    await updateDoc(TaskRef, {
+      completa: !complete,
+    });
+  };
+
   return (
     <TasklistContainer>
-     {icon}
-      <p>
-        {text}
-      </p>
-      <FaRegTrashCan size={20} color="#FFE9B1" />
+      <button onClick={() => handleComplete(id)}>
+        {complete ? (
+          <FaRegCheckCircle size={22} color="#864AF9" />
+        ) : (
+          <FaRegCircle size={22} color="#864AF9" />
+        )}
+      </button>
+      <TextTask completed={complete}>{text}</TextTask>
+      <button onClick={() => handleDelete(id)}>
+        <FaRegTrashCan size={20} color="#FFE9B1" />
+      </button>
     </TasklistContainer>
   );
 };
