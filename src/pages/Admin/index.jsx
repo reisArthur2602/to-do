@@ -3,7 +3,16 @@ import { Hero } from "../../components/Hero";
 import Tasklist from "../../components/Tasklist";
 import CountTask from "../../components/CountTask";
 import Empyt from "../../components/Empyt";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+
 import { db } from "../../services/firebaseConnection";
 
 import styled from "styled-components";
@@ -70,22 +79,47 @@ const TasklistContainer = styled.div`
 `;
 
 const Admin = () => {
-  const [task, setTask] = useState("");
+  const [taskInput, setTaskInput] = useState("");
   const [UserLS, setUserLS] = useState("");
-
+  const [task, setTask] = useState("");
   useEffect(() => {
     const loadTask = async () => {
-      const data = localStorage.getItem("@dataUser");
-      setUserLS(JSON.parse(data));
+      const data = JSON.parse(localStorage.getItem("@dataUser"));
+      setUserLS(data);
+
+      if (data) {
+        const taskRef = collection(db, "tarefas");
+        const q = query(
+          taskRef,
+          orderBy("created", "desc"),
+          where("userUid", "==", data?.uid)
+        );
+
+        const unsub = onSnapshot(q, (snapshot) => {
+          let list = [];
+
+          snapshot.forEach((doc) => {
+            list.push({
+              id: doc.id,
+              tarefa: doc.data().tarefa,
+              userUid: doc.data().userUid,
+              created: doc.data().created,
+            });
+          });
+
+          setTask(list);
+          
+        });
+      }
     };
     loadTask();
   }, []);
 
   const createTask = async (e) => {
     e.preventDefault();
-    if (task !== "") {
+    if (taskInput !== "") {
       await addDoc(collection(db, "tarefas"), {
-        tarefa: task,
+        tarefa: taskInput,
         created: new Date(),
         userUid: UserLS?.uid,
       })
@@ -101,8 +135,8 @@ const Admin = () => {
           <InputTask
             type="text"
             placeholder="Adicione uma nova tarefa"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
+            value={taskInput}
+            onChange={(e) => setTaskInput(e.target.value)}
           />
           <ButtonTask type="submit">
             Criar
@@ -112,16 +146,26 @@ const Admin = () => {
 
         <FlexContainer>
           <WrapperCount>
-            <CountTask text="Tarefas Criadas" />
-            <CountTask text="Concluídas" />
+            <CountTask text="Tarefas Criadas" count={task.length} />
+            <CountTask text="Concluídas"  />
           </WrapperCount>
 
           <TasklistContainer>
+
+
+
+
+
             <Tasklist
               icon={<FaRegCheckCircle size={24} color="#864AF9" />}
               text="Integer urna interdum massa libero auctor neque turpis turpis semper.
         Duis vel sed fames integer."
             />
+
+
+
+
+
           </TasklistContainer>
         </FlexContainer>
       </Container>
