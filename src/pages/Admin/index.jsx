@@ -6,7 +6,6 @@ import Empyt from "../../components/Empyt";
 import {
   addDoc,
   collection,
-  doc,
   onSnapshot,
   orderBy,
   query,
@@ -14,7 +13,6 @@ import {
 } from "firebase/firestore";
 
 import { db } from "../../services/firebaseConnection";
-
 import styled from "styled-components";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaRegCheckCircle } from "react-icons/fa";
@@ -81,7 +79,7 @@ const TasklistContainer = styled.div`
 const Admin = () => {
   const [taskInput, setTaskInput] = useState("");
   const [UserLS, setUserLS] = useState("");
-  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
   useEffect(() => {
     const loadTask = async () => {
       const data = JSON.parse(localStorage.getItem("@dataUser"));
@@ -107,8 +105,7 @@ const Admin = () => {
             });
           });
 
-          setTask(list);
-          
+          setTasks(list);
         });
       }
     };
@@ -146,26 +143,22 @@ const Admin = () => {
 
         <FlexContainer>
           <WrapperCount>
-            <CountTask text="Tarefas Criadas" count={task.length} />
-            <CountTask text="Concluídas"  />
+            <CountTask text="Tarefas Criadas" count={tasks.length} />
+            <CountTask text="Concluídas" />
           </WrapperCount>
 
           <TasklistContainer>
-
-
-
-
-
-            <Tasklist
-              icon={<FaRegCheckCircle size={24} color="#864AF9" />}
-              text="Integer urna interdum massa libero auctor neque turpis turpis semper.
-        Duis vel sed fames integer."
-            />
-
-
-
-
-
+            {tasks.length > 0 ? (
+              tasks.map((task) => (
+                <Tasklist
+                  icon={<FaRegCircle size={24} color="#864AF9" />}
+                  text={task.tarefa}
+                  key={task.id}
+                />
+              ))
+            ) : (
+              <Empyt />
+            )}
           </TasklistContainer>
         </FlexContainer>
       </Container>
