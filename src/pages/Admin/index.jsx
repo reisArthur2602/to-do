@@ -1,9 +1,12 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { Hero } from "../../components/Hero";
 import Tasklist from "../../components/Tasklist";
 import CountTask from "../../components/CountTask";
 import Empyt from "../../components/Empyt";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../services/firebaseConnection";
 
+import styled from "styled-components";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa6";
@@ -15,7 +18,7 @@ const Container = styled.section`
   flex-direction: column;
   gap: 62px;
 `;
-const Wrapper = styled.div`
+const FormTask = styled.form`
   display: flex;
   gap: 0.5rem;
 `;
@@ -67,16 +70,45 @@ const TasklistContainer = styled.div`
 `;
 
 const Admin = () => {
+  const [task, setTask] = useState("");
+  const [UserLS, setUserLS] = useState("");
+
+  useEffect(() => {
+    const loadTask = async () => {
+      const data = localStorage.getItem("@dataUser");
+      setUserLS(JSON.parse(data));
+    };
+    loadTask();
+  }, []);
+
+  const createTask = async (e) => {
+    e.preventDefault();
+    if (task !== "") {
+      await addDoc(collection(db, "tarefas"), {
+        tarefa: task,
+        created: new Date(),
+        userUid: UserLS?.uid,
+      })
+        .then(() => console.log("Tarefa cadastrada com sucesso"))
+        .catch((err) => console.log("Erro ao cadastrar tarefa" + err));
+    }
+  };
+
   return (
     <Hero>
       <Container>
-        <Wrapper>
-          <InputTask type="text" placeholder="Adicione uma nova tarefa" />
-          <ButtonTask>
+        <FormTask onSubmit={createTask}>
+          <InputTask
+            type="text"
+            placeholder="Adicione uma nova tarefa"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <ButtonTask type="submit">
             Criar
             <IoIosAddCircleOutline size={25} color="white" />
           </ButtonTask>
-        </Wrapper>
+        </FormTask>
 
         <FlexContainer>
           <WrapperCount>

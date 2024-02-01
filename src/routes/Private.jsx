@@ -14,7 +14,7 @@ export const Private = ({ children }) => {
 
           const UserData = {
             uid: user.uid,
-            email: user.uid,
+            email: user.email,
           };
 
           localStorage.setItem("@dataUser", JSON.stringify(UserData));
