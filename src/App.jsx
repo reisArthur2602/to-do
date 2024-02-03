@@ -16,13 +16,13 @@ const Container = styled.div`
 
 const App = () => {
   return (
-    <>
+    <> 
       <Container>
         <Header />
         <AppRoutes />
       </Container>
     </>
-  );
+  ); 
 };
 
 export default App;
