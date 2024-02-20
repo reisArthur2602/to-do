@@ -8,7 +8,7 @@
 ### 💡Sobre o projeto
 
 Este projeto foi criado para colocar em prática os conhecimentos adquiridos em Reactjs, StyledComponents e Firebase. <br>
-O objetivo principal do projeto é ser usado como uma lista de tarefas, além de utilizar conceitos como react-router-dom para a navegação entre páginas ,e criação de rotas privadas, html semântico, criar ,deletar , ler , atualizar informações no banco de dados ,
+O objetivo principal do projeto é ser usado como uma lista de tarefas, além de utilizar conceitos como react-router-dom para a navegação entre páginas ,e criação de rotas privadas, html semântico, criar ,deletar , ler , atualizar informações no banco de dados , fluxo de autenticação ,
 
 ### 💻Tecnologias usadas
 
